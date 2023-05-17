@@ -14,6 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
             'gender',
         )
 
+
 class RegionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Region
@@ -66,3 +67,26 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Invalid password.")
 
         return attrs
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+    new_confirm_password = serializers.CharField(required=True)
+
+    class Meta:
+        model = User
+        fields = (
+            'old_password',
+            'new_password',
+            'new_confirm_password'
+        )
+
+
+class ResetPasswordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'email',
+        ]

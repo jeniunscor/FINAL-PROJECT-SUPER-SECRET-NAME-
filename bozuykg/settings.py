@@ -69,6 +69,11 @@ ROOT_URLCONF = 'bozuykg.urls'
 
 AUTH_USER_MODEL = 'users.User'
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'adilet.meta@gmail.com'
+EMAIL_HOST_PASSWORD = 'eeuvuiimvejhhjmx'
+EMAIL_PORT = 587
 
 TEMPLATES = [
     {

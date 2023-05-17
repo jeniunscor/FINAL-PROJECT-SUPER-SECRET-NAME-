@@ -29,6 +29,8 @@ from apps.users.views import (
     RegisterView,
     LoginView,
     UserViewSet,
+    ChangePasswordView,
+    ResetPasswordAPIView,
 )
 
 schema_view = get_schema_view(
@@ -51,6 +53,8 @@ router.register(r'users', UserViewSet, basename="user")
 users_urls = [
     path('register/', RegisterView.as_view()),
     path('login/', LoginView.as_view()),
+    path('change-password/', ChangePasswordView.as_view(), name='change_password'),
+    path('reset-password/', ResetPasswordAPIView.as_view(), name='reset_password'),
 ]
 
 

@@ -1,6 +1,8 @@
 import jwt
 
 from django.shortcuts import get_object_or_404
+from django.core.mail import send_mail
+from django.conf import settings
 
 from rest_framework import generics, viewsets, permissions
 from rest_framework.response import Response
@@ -12,6 +14,8 @@ from apps.users.serializers import (
     RegisterSerializer,
     LoginSerializer,
     UserSerializer,
+    ChangePasswordSerializer,
+    ResetPasswordSerializer,
 )
 
 
@@ -52,3 +56,74 @@ class LoginView(generics.GenericAPIView):
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         }, status=status.HTTP_200_OK)
+
+
+class ChangePasswordView(generics.UpdateAPIView):
+    serializer_class = ChangePasswordSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def init(self, *args, **kwargs):
+        super().init(*args, **kwargs)
+        self.object = None
+
+    def get_object(self, queryset=None):
+        obj = self.request.user
+        return obj
+
+    def update(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+
+        response = {
+            'status': 'error',
+            'code': status.HTTP_400_BAD_REQUEST,
+            'message': 'Password update failed',
+            'data': {}
+        }
+
+        if serializer.is_valid():
+            old_password = serializer.data.get("old_password")
+            new_password = serializer.data.get("new_password")
+            new_confirm_password = serializer.data.get("new_confirm_password")
+
+            if not self.object.check_password(old_password):
+                response['data'] = {"old_password": ["Wrong password"]}
+            elif new_password != new_confirm_password:
+                response['data'] = {"new_password": ["New passwords do not match."]}
+            else:
+                self.object.set_password(new_password)
+                self.object.save()
+
+                response = {
+                    'status': 'success',
+                    'code': status.HTTP_200_OK,
+                    'message': 'Password updated successfully',
+                    'data': {}
+                }
+
+        return Response(response)
+
+
+class ResetPasswordAPIView(generics.GenericAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = ResetPasswordSerializer
+
+    def post(self, request, *args, **kwargs):
+        email = request.data.get('email')
+        if email:
+            try:
+                user = User.objects.get(email=email)
+            except User.DoesNotExist:
+                return Response({'error': 'No user found with this email'}, status=400)
+            password = User.objects.make_random_password()
+            user.set_password(password)
+            user.save()
+            send_mail(
+                'Password Reset Request',
+                f'Ваш новый пароль  {password}',
+                settings.EMAIL_HOST_USER,
+                [email],
+                fail_silently=False,
+            )
+            return Response({'success': 'Password reset email has been sent'})
+        return Response({'error': 'Email field is required'}, status=400)
