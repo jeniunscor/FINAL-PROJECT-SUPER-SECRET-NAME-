@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 
 
-from apps.common.constant import GenderType
+from apps.common.constant import GenderType, UserType
 from apps.common.models import AbstractBaseModel
 
 
@@ -50,23 +50,29 @@ class User(AbstractUser, AbstractBaseModel):
         max_length=60, unique=True,
     )
     avatar = models.FileField(
-        upload_to='images/%Y/%m/%d/', 
+        upload_to='images/%Y/%m/%d/',
         verbose_name='Фото'
     )
-    # region = models.ForeignKey(
-    #    Region, on_delete=models.CASCADE, related_name="User",
-    #    verbose_name="Регион"
-    # )
+    region = models.ForeignKey(
+       Region, on_delete=models.CASCADE, related_name="User",
+       verbose_name="Регион"
+    )
     number = models.CharField(
        max_length=50, verbose_name='Номер телефона'
     )
     gender = models.CharField(
         max_length=10, choices=GenderType.choices,
-        verbose_name='Гендер пользователя', default=GenderType.FEMALE
+        verbose_name='Гендер пользователя', default=GenderType.МУЖСКОЙ
     )
     is_admin = models.BooleanField(
        default=False,
     )
+    user_type = models.CharField(
+        max_length=10, choices=UserType.choices,
+        verbose_name='тип пользователя',
+        default=UserType.ГОСТЬ
+    )
+
     objects = CustomUserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
