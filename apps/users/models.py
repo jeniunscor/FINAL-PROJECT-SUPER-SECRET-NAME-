@@ -53,10 +53,10 @@ class User(AbstractUser, AbstractBaseModel):
         upload_to='images/%Y/%m/%d/',
         verbose_name='Фото'
     )
-    region = models.ForeignKey(
-       Region, on_delete=models.CASCADE, related_name="User",
-       verbose_name="Регион"
-    )
+    # region = models.ForeignKey(
+    #    Region, on_delete=models.CASCADE, related_name="User",
+    #    verbose_name="Регион"
+    # )
     number = models.CharField(
        max_length=50, verbose_name='Номер телефона'
     )
