@@ -8,9 +8,8 @@ class GenderType(TextChoices):
 
 
 class RealtyType(TextChoices):
-    АРЕНДА = 'АРЕНДА'
     ПРОДАЖА = 'ПРОДАЖА'
-    ПОКУПКА = 'ПОКУПКА'
+    АРЕНДА = 'АРЕНДА'
 
 
 class UserType(TextChoices):

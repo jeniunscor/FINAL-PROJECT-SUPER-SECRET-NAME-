@@ -33,6 +33,14 @@ from apps.users.views import (
     ResetPasswordAPIView,
 )
 
+from apps.posts.views import (
+    PostListCreateView,
+    PostDetailView,
+    PostListView,
+    CommentCreateView,
+    CommentListView,
+)
+
 schema_view = get_schema_view(
    openapi.Info(
       title="Snippets API",
@@ -57,11 +65,20 @@ users_urls = [
     path('reset-password/', ResetPasswordAPIView.as_view(), name='reset_password'),
 ]
 
+posts_urls = [
+    path('posts/', PostListCreateView.as_view(), name='post_list'),
+    path('post/<uuid:pk>/', PostDetailView.as_view(), name='post_detail'),
+    path('comment/<uuid:post_pk>/', CommentCreateView.as_view(), name='comment_create'),
+    path('allposts/', PostListView.as_view(), name='all_postlist'),
+    path('comments/', CommentListView.as_view(), name='all_commentlist'),
+
+]
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include(users_urls)),
     path('user/', include(router.urls)),
+    path('post/', include(posts_urls)),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),

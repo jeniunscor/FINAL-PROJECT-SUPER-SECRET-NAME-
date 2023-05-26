@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from posts.models import Category, Post
+from apps.posts.models import Category, Post, Commentary
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -20,7 +20,19 @@ class PostSerializer(serializers.ModelSerializer):
             "subtitle",
             "category",
             "description",
-            "is_active",
-            "commentary",
             "post_image",
+            'is_active',
         )
+
+
+class CommentarySerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.username')
+
+    class Meta:
+        model = Commentary
+        fields = [
+            'id',
+            'description',
+            'author',
+            'post',
+        ]
