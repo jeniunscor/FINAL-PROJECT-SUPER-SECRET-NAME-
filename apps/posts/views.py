@@ -59,3 +59,7 @@ class CommentListView(generics.ListAPIView):
     queryset = Commentary.objects.all()
     serializer_class = CommentarySerializer
     permission_classes = [permissions.IsAuthenticated, IsBuyerOrReadOnly]
+
+    def get_queryset(self):
+        post_id = self.kwargs['post_pk']  # взять id поста из URL
+        return Commentary.objects.filter(post__pk=post_id)
