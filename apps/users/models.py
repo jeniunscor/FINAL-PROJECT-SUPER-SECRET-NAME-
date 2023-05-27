@@ -33,10 +33,10 @@ class Region(AbstractBaseModel):
     name = models.CharField(
        max_length=100, verbose_name='Область'
     )
-    
+
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name = 'Область'
         verbose_name_plural = 'Области'
