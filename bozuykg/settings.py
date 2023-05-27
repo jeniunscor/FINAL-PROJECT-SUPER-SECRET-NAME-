@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.posts',
     'apps.common',
+    'apps.feedback',
 
 ]
 
@@ -75,6 +76,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'adilet.meta@gmail.com'
 EMAIL_HOST_PASSWORD = 'eeuvuiimvejhhjmx'
 EMAIL_PORT = 587
+ADMIN_EMAIL = 'rypysh.oo@gmail.com'
 
 TEMPLATES = [
     {

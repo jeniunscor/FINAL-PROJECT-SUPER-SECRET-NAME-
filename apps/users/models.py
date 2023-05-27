@@ -53,7 +53,7 @@ class City(AbstractBaseModel):
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name = 'Город'
         verbose_name_plural = 'Города'
