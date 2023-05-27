@@ -73,7 +73,7 @@ class User(AbstractUser, AbstractBaseModel):
         verbose_name='Фото'
     )
     city = models.ForeignKey(
-        City, on_delete=models.CASCADE, 
+        City, on_delete=models.CASCADE,
         related_name='users', verbose_name='Город',
         null=True, blank=True,
     )
