@@ -10,8 +10,18 @@ class UserSerializer(serializers.ModelSerializer):
             'id',
             'email',
             'avatar',
+            'city',
             'number',
             'gender',
+            'user_type',
+        )
+
+
+class AvatarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'avatar',
         )
 
 
