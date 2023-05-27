@@ -33,11 +33,30 @@ class Region(AbstractBaseModel):
     name = models.CharField(
        max_length=100, verbose_name='Область'
     )
-    parent = models.ForeignKey(
-       'self', on_delete=models.CASCADE,
-        related_name='children', blank=True, null=True,
-        verbose_name='Родительская категория'
+    
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Область'
+        verbose_name_plural = 'Области'
+
+
+class City(AbstractBaseModel):
+    name = models.CharField(
+       max_length=100, verbose_name='Область'
     )
+    region = models.ForeignKey(
+        Region, on_delete=models.CASCADE, related_name="cities",
+        verbose_name="Области"
+    )
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Город'
+        verbose_name_plural = 'Города'
 
 
 class User(AbstractUser, AbstractBaseModel):
@@ -53,10 +72,11 @@ class User(AbstractUser, AbstractBaseModel):
         upload_to='images/%Y/%m/%d/',
         verbose_name='Фото'
     )
-    # region = models.ForeignKey(
-    #    Region, on_delete=models.CASCADE, related_name="User",
-    #    verbose_name="Регион"
-    # )
+    city = models.ForeignKey(
+        City, on_delete=models.CASCADE, 
+        related_name='users', verbose_name='Город',
+        null=True, blank=True,
+    )
     number = models.CharField(
        max_length=50, verbose_name='Номер телефона'
     )

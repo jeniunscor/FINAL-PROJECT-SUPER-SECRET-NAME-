@@ -8,12 +8,14 @@ from rest_framework import generics, viewsets, permissions
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.decorators import action
 
 from apps.users.models import User
 from apps.users.serializers import (
     RegisterSerializer,
     LoginSerializer,
     UserSerializer,
+    AvatarSerializer,
     ChangePasswordSerializer,
     ResetPasswordSerializer,
 )
@@ -24,6 +26,44 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
+    @action(detail=False, methods=['get'])
+    def profile(self, request, user_id=None):
+        queryset = User.objects.filter(id=user_id or request.user.id)
+        user = get_object_or_404(queryset)
+        serializer = self.get_serializer(user)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['put'])
+    def edit(self, request, user_id=None):
+        queryset = User.objects.filter(id=user_id or request.user.id)
+        user = get_object_or_404(queryset)
+        serializer = self.get_serializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+
+class AvatarViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = AvatarSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    @action(detail=False, methods=['post'])
+    def post_avatar_profile(self, request, user_id=None):
+        queryset = User.objects.filter(id=user_id or request.user.id)
+        user = get_object_or_404(queryset)
+        serializer = self.get_serializer(user)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get', 'put'])
+    def avatar(self, request, user_id=None):
+        queryset = User.objects.filter(id=user_id or request.user.id)
+        user = get_object_or_404(queryset)
+        serializer = self.get_serializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+    
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()

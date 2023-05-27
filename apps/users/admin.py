@@ -32,3 +32,8 @@ class UserAdmin(UserAdmin):
         'is_active',
         'is_staff'
     )
+
+
+@admin.register(Region)
+class WorkAdmin(admin.ModelAdmin):
+    pass
