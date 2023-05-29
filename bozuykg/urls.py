@@ -29,6 +29,10 @@ from apps.feedback.views import (
     FeedbackMessageCreateView,
 )
 
+from apps.faq.views import (
+    FAQListView,
+)
+
 schema_view = get_schema_view(
    openapi.Info(
       title="Snippets API",
@@ -66,12 +70,18 @@ feedback_urls = [
     path('feedback/', FeedbackMessageCreateView.as_view(), name='feedback_create')
 ]
 
+
+faq_urls = [
+    path('faq/', FAQListView.as_view())
+]
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include(users_urls)),
     path('user/', include(router.urls)),
     path('post/', include(posts_urls)),
     path('feedback/', include(feedback_urls)),
+    path('fag/', include(faq_urls)),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
