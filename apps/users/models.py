@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 from apps.common.constant import GenderType, UserType
 from apps.common.models import AbstractBaseModel
+# from apps.posts.models import Post
 
 
 class CustomUserManager(BaseUserManager):

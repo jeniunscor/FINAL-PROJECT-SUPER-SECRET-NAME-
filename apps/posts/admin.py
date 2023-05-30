@@ -10,20 +10,20 @@ from apps.posts.models import (
 
 
 @admin.register(Category)
-class WorkAdmin(admin.ModelAdmin):
+class CategoryAdmin(admin.ModelAdmin):
     pass
 
 
 @admin.register(Post)
-class WorkAdmin(admin.ModelAdmin):
+class PostAdmin(admin.ModelAdmin):
     pass
 
 
 @admin.register(PostImage)
-class WorkAdmin(admin.ModelAdmin):
+class PostImageAdmin(admin.ModelAdmin):
     pass
 
 
 @admin.register(Commentary)
-class WorkAdmin(admin.ModelAdmin):
+class CommentaryAdmin(admin.ModelAdmin):
     pass
