@@ -35,5 +35,5 @@ class UserAdmin(UserAdmin):
 
 
 @admin.register(Region)
-class WorkAdmin(admin.ModelAdmin):
+class RegionAdmin(admin.ModelAdmin):
     pass
