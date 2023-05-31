@@ -41,8 +41,9 @@ INSTALLED_APPS = [
     'apps.posts',
     'apps.common',
     'apps.feedback',
-
+    'apps.faq',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
