@@ -60,7 +60,7 @@ users_urls = [
 ]
 
 posts_urls = [
-    path('posts/', PostListCreateView.as_view(), name='post_list'),
+    path('post/', PostListCreateView.as_view(), name='post_list'),
     path('post/<uuid:pk>/', PostDetailView.as_view(), name='post_detail'),
     path('allposts/', PostListView.as_view(), name='all_postlist'),
     path('comment/<uuid:post_pk>/', CommentCreateView.as_view(), name='comment_create'),

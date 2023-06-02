@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from apps.users.models import User, Region
+from apps.users.models import User, Region, City
 
 
 @admin.register(User)
@@ -13,7 +13,9 @@ class UserAdmin(UserAdmin):
             'avatar',
             'gender',
             'is_admin',
+            'city',
             'region',
+
         )}),
         ('Permissions', {'fields': (
             'is_active',
@@ -30,10 +32,16 @@ class UserAdmin(UserAdmin):
         'email',
         'gender',
         'is_active',
-        'is_staff'
+        'is_staff',
+
     )
 
 
 @admin.register(Region)
 class RegionAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(City)
+class CityAdmin(admin.ModelAdmin):
     pass

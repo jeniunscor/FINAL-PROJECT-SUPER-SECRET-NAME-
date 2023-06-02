@@ -63,7 +63,7 @@ class AvatarViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-    
+
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()

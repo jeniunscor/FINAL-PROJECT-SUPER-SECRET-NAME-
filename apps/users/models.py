@@ -45,7 +45,7 @@ class Region(AbstractBaseModel):
 
 class City(AbstractBaseModel):
     name = models.CharField(
-       max_length=100, verbose_name='Область'
+       max_length=100, verbose_name='город'
     )
     region = models.ForeignKey(
         Region, on_delete=models.CASCADE, related_name="cities",
@@ -76,6 +76,11 @@ class User(AbstractUser, AbstractBaseModel):
     city = models.ForeignKey(
         City, on_delete=models.CASCADE,
         related_name='users', verbose_name='Город',
+        null=True, blank=True,
+    )
+    region = models.ForeignKey(
+        Region, on_delete=models.CASCADE,
+        related_name='users', verbose_name='Область',
         null=True, blank=True,
     )
     number = models.CharField(
