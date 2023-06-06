@@ -60,23 +60,22 @@ users_urls = [
 ]
 
 posts_urls = [
-    path('post/', PostListCreateView.as_view(), name='post_list'),
-    path('post/<uuid:pk>/', PostDetailView.as_view(), name='post_detail'),
-    path('allposts/', PostListView.as_view(), name='all_postlist'),
-    path('comment/<uuid:post_pk>/', CommentCreateView.as_view(), name='comment_create'),
-    path('comments/<uuid:post_pk>/', CommentListView.as_view(), name='post-comments'),
+    path('create_post/', PostListCreateView.as_view(), name='post_list'),
+    path('detailed_post/', PostDetailView.as_view(), name='post_detail'),
+    path('all_posts/', PostListView.as_view(), name='all_postlist'),
+    path('create_comment/', CommentCreateView.as_view(), name='comment_create'),
+    path('all_comments/', CommentListView.as_view(), name='post-comments'),
 
 ]
 
 feedback_urls = [
-    path('feedback/', FeedbackMessageCreateView.as_view(), name='feedback_create'),
-    path('favorite/<uuid:post_pk>/', FavoriteCreateDestroyView.as_view(), name='favorite_create'),
-    path('favorites/', FavoriteListView.as_view(), name='favorites_list')
+    path('create_feedback/', FeedbackMessageCreateView.as_view(), name='feedback_create'),
+    path('add_to_favorite/', FavoriteCreateDestroyView.as_view(), name='favorite_create'),
+    path('all_favorites/', FavoriteListView.as_view(), name='favorites_list')
 ]
 
-
 faq_urls = [
-    path('faq/', FAQListView.as_view())
+    path('frequently_asked_questions/', FAQListView.as_view())
 ]
 
 urlpatterns = [
@@ -85,7 +84,7 @@ urlpatterns = [
     path('user/', include(router.urls)),
     path('posts/', include(posts_urls)),
     path('feedback/', include(feedback_urls)),
-    path('fag/', include(faq_urls)),
+    path('faq/', include(faq_urls)),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
