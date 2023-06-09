@@ -53,8 +53,8 @@ router = DefaultRouter()
 router.register(r'users', UserViewSet, basename="user")
 
 users_urls = [
-    path('register/', RegisterView.as_view()),
-    path('login/', LoginView.as_view()),
+    path('register/', RegisterView.as_view(), name='registration'),
+    path('login/', LoginView.as_view(), name='login'),
     path('change-password/', ChangePasswordView.as_view(), name='change_password'),
     path('reset-password/', ResetPasswordAPIView.as_view(), name='reset_password'),
 ]
