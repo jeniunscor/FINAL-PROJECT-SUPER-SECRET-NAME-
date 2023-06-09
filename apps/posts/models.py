@@ -49,10 +49,6 @@ class Post(AbstractBaseModel):
         'Commentary', on_delete=models.CASCADE, null=True, blank=True,
         related_name='posts', verbose_name='комментарий'
     )
-    post_image = models.ForeignKey(
-        'PostImage', on_delete=models.CASCADE, null=True, blank=True,
-        related_name='posts', verbose_name='картина'
-    )
     address = models.CharField(
         max_length=255, verbose_name='адресс'
     )
@@ -91,6 +87,10 @@ class PostImage(AbstractBaseModel):
     )
     is_preview = models.BooleanField(
         default=False, verbose_name='Превью'
+    )
+    post = models.ForeignKey(
+        'Post', on_delete=models.CASCADE, null=True, blank=True,
+        related_name='post_images', verbose_name='пост'
     )
 
     class Meta:
